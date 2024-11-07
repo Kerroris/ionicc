@@ -1,0 +1,33 @@
+<ion-content>
+  <div class="login-container">
+    <div class="login-form">
+      <h2>Iniciar Sesión</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        
+        <ion-item lines="none">
+          <ion-label position="floating">Correo Electrónico</ion-label>
+          <ion-input type="email" formControlName="email" required>
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password"></ion-input>
+          <div color="none" class="btn_ahow_pass" slot="end" (click)="togglePasswordVisibility()">
+            <ion-icon style="color: black;" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+          </div>
+        </ion-item>
+
+        <button class="login-button" type="submit" [disabled]="loginForm.invalid">
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <div class="footer-links">
+        <!-- <a href="#">¿Olvidaste tu contraseña?</a> -->
+        <a routerLink="/register">Crear una cuenta</a>
+      </div>
+    </div>
+  </div>
+</ion-content>

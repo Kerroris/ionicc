@@ -1,0 +1,21 @@
+.container_list {
+  margin: 0;
+  padding: 20px;
+  width: 100%; // Ajusta este valor para controlar el ancho 
+  max-width: 1200px;
+  margin-left: auto; // Centrar horizontalmente 
+  margin-right: auto;
+  --box-shadow: none; // Elimina sombra
+}
+
+.img_nav{
+  width: 20px;
+  height: auto;
+}
+
+.item_list{
+  cursor:auto;
+  &:hover{
+    background-color: #00000027;
+  }
+}

@@ -1,2 +1,50 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+// Variables globales de tema claro  3079f8
+:root {
+    --ion-background-color: #ffffff;
+    --primary-all-v1: #09090901;
+    --primary-all-v2: #3079f8e4;
+}
+
+.btn_decorate {
+    border-radius: 25px;
+    padding: 1px;
+    font-weight: 12px;
+
+    &:hover {
+        background-color: #07af346f;
+        border-radius: 0px;
+        border-bottom: 1px solid #000000;
+    }
+}
+
+.login-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.barra_web {
+    background-color: var(--primary-all-v1) !important; // Usa tu variable de color
+}
+
+ion-header {
+    box-shadow: none !important;
+}
+
+.my-custom-loading-3 {
+    --spinner-color: #379e06;
+    font-size: 17px;
+    --background: rgba(255, 255, 255, 0.963);
+}
+
+.btn_ahow_pass{
+    color: black;
+    margin-top: 2rem;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .btn_ahow_pass:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+  }

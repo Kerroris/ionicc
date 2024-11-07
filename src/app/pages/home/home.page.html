@@ -1,0 +1,55 @@
+<ion-content class="container">
+  <ion-list class="container_list">
+    <ion-item class="item_list" *ngFor="let contact of contacts; let i = index">
+
+      <ion-checkbox *ngIf="isLargeScreen" slot="start" [(ngModel)]="contact.selected"
+        (ionChange)="onSelect(contact, i)"></ion-checkbox>
+      <ion-avatar slot="start">
+        <img [src]="contact.avatar" alt="Avatar" loading="lazy">
+      </ion-avatar>
+
+      <ion-label>
+        <h2>{{ contact.name }}</h2>
+        <p>{{ contact.email }}</p>
+        <p>{{ contact.phone }}</p>
+      </ion-label>
+
+      <ion-buttons *ngIf="isLargeScreen" slot="end">
+        <ion-button class="btn_decorate">
+          Editar
+          <img src="assets/img/editar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-button>
+        <ion-button class="btn_decorate">
+          Eliminar
+          <img src="assets/img/borrar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-button>
+      </ion-buttons>
+
+
+      <ion-buttons *ngIf="!isLargeScreen" slot="end">
+        <ion-button class="btn_decorate" (click)="openPopover(contact)">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+    </ion-item>
+  </ion-list>
+
+
+  <!-- Mostrar opciones -->
+  <ion-popover #popover [isOpen]="isPopoverOpen" (didDismiss)="isPopoverOpen = false">
+    <ng-template>
+      <ion-list>
+        <ion-item button (click)="editContact(selectedContact)">Editar
+          <img src="assets/img/editar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-item>
+        <ion-item button (click)="deleteContact(selectedContact)">Eliminar
+          <img src="assets/img/borrar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-popover>
+
+
+
+</ion-content>

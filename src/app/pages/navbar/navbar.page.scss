@@ -1,0 +1,31 @@
+.img_nav {
+    width: 30px;
+    height: auto;
+}
+
+.logo_img_nav {
+    width: 20%;
+    height: auto;
+    max-width: 20%;
+    margin-left: 10px;
+}
+
+.alert {
+    position: absolute;
+    top: 0px;
+    right: -300px;
+    width: 250px;
+    padding: 15px;
+    background-color: black;
+    color: white;
+    border-bottom: 5px solid rgb(17, 184, 17);
+    font-size: 16px;
+    border-radius: 0px;
+    font-weight: bold;
+    transition: right 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+.alert.show {
+    right: 20px;
+}
