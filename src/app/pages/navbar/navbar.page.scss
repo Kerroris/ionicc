@@ -1,31 +1,56 @@
 .img_nav {
-    width: 30px;
+    width: 20px;
     height: auto;
 }
 
-.logo_img_nav {
-    width: 20%;
-    height: auto;
-    max-width: 20%;
-    margin-left: 10px;
+
+// ----------------- 
+
+// --- Movil 📱 ---
+
+/* Para pantallas de móviles (hasta 480px) */
+@media (max-width: 480px) {
+    .logo_img_nav {
+        width: 70%;
+        height: auto;
+        margin-left: 10px;
+    }
 }
 
-.alert {
-    position: absolute;
-    top: 0px;
-    right: -300px;
-    width: 250px;
-    padding: 15px;
-    background-color: black;
-    color: white;
-    border-bottom: 5px solid rgb(17, 184, 17);
-    font-size: 16px;
-    border-radius: 0px;
-    font-weight: bold;
-    transition: right 0.5s ease-in-out;
-    z-index: 1000;
+/* Para pantallas de tablets pequeñas (entre 481px y 768px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .logo_img_nav {
+        width: 50%;
+        height: auto;
+        margin-left: 10px;
+    }
 }
 
-.alert.show {
-    right: 20px;
+// --- WEB 💻 ---
+
+/* Para pantallas de tablets grandes (entre 769px y 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .logo_img_nav {
+        width: 20%;
+        height: auto;
+        margin-left: 10px;
+    }
+}
+
+/* Para pantallas de escritorio pequeñas (entre 1025px y 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .logo_img_nav {
+        width: 20%;
+        height: auto;
+        margin-left: 10px;
+    }
+}
+
+/* Para pantallas de escritorio grandes (más de 1280px) */
+@media (min-width: 1281px) {
+    .logo_img_nav {
+        width: 10%;
+        height: auto;
+        margin-left: 10px;
+    }
 }

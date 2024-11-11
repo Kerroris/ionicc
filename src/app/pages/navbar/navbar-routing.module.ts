@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../guards/auth.guard';
+import { NotAuthGuard } from '../../guards/notauth.guard';
 import { NavbarPage } from './navbar.page';
 
 const routes: Routes = [
@@ -10,11 +11,13 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
+        canActivate: [NotAuthGuard],
         loadChildren: () =>
           import('../login/login.module').then((m) => m.LoginPageModule),
       },
       {
         path: 'register',
+        canActivate: [NotAuthGuard],
         loadChildren: () =>
           import('../register/register.module').then((m) => m.RegisterPageModule),
       },
@@ -25,10 +28,16 @@ const routes: Routes = [
           import('../home/home.module').then((m) => m.HomePageModule),
       },
       {
-        path: 'cantact-detalle',
+        path: 'cantact-detalle/:id',
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('../cantact-detalle/cantact-detalle.module').then((m) => m.CantactDetallePageModule),
+      },
+      {
+        path: 'add-contacto',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('../add-contacto/add-contacto.module').then((m) => m.AddContactoPageModule),
       },
     ],
   },

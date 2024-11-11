@@ -1,6 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, RendererFactory2 } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-navbar',
@@ -11,33 +12,25 @@ export class NavbarPage implements OnInit {
   public isLoggedIn: boolean = false;
 
   constructor(
-    private renderer: Renderer2,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private menuCtrl: MenuController
   ) {}
 
   ngOnInit() {
-    
     // console.log('Hola - ☢️');
 
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
     });
+  }
 
-    // ------ -----
-    const alertElement = document.querySelector('.alert');
-    // Verifica que el elemento exista antes de intentar agregar o remover clases
-    if (alertElement) {
-      // Mostrar alerta despus de 1 segundo
-      setTimeout(() => {
-        this.renderer.addClass(alertElement, 'show');
-      }, 1000);
+  openMenu() {
+    this.menuCtrl.open('main-menu');
+  }
 
-      // Ocultar la alerta 
-      setTimeout(() => {
-        this.renderer.removeClass(alertElement, 'show');
-      }, 5000);
-    }
+  closeMenu() {
+    this.menuCtrl.close('main-menu'); 
   }
 
   // Función para salir

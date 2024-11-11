@@ -1,0 +1,125 @@
+/* Contenedor principal */
+.container_form {
+    width: auto;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-item {
+    --background: transparent;
+    --border-radius: 5px;
+    margin: 8px 0;
+}
+
+.btn_agregar {
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.449);
+    color: rgb(0, 0, 0);
+    border-radius: 0px;
+    border-bottom: 1px solid rgb(42, 177, 8);
+    width: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &:hover {
+        background-color: rgba(42, 177, 8, 0.227);
+    }
+}
+
+.btn_agregar:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.btn_cancelar {
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.449);
+    color: rgb(0, 0, 0);
+    border-radius: 0px;
+    border-bottom: 1px solid rgb(255, 0, 0);
+    width: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &:hover {
+        background-color: rgba(255, 0, 0, 0.227);
+    }
+}
+
+.btn_cancelar:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.btn_selec_image {
+    padding: 5px;
+    background-color: rgba(74, 255, 3, 0.449);
+    color: black;
+}
+
+.img_arrow_right {
+    width: 18px;
+    height: auto;
+}
+
+.img_nav {
+    width: 20px;
+    height: auto;
+}
+
+
+.phone-input-grid {
+    width: 100%;
+}
+
+.country-selector ion-select {
+    // display: flex;
+    font-size: 10px;
+    align-items: center;
+}
+
+
+.country-option {
+    display: flex;
+    align-items: center;
+}
+
+.country-flag {
+    width: 24px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.country-name {
+    font-size: 14px;
+}
+
+
+// ----------------- 
+
+// --- Movil 📱 ---
+
+/* Para pantallas de móviles (hasta 480px) */
+@media (max-width: 480px) {}
+
+/* Para pantallas de tablets pequeñas (entre 481px y 768px) */
+@media (min-width: 481px) and (max-width: 767px) {}
+
+// --- WEB 💻 ---
+
+/* Para pantallas de tablets grandes (entre 769px y 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {}
+
+/* Para pantallas de escritorio pequeñas (entre 1025px y 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {}
+
+/* Para pantallas de escritorio grandes (más de 1280px) */
+@media (min-width: 1281px) {}

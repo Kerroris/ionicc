@@ -48,8 +48,9 @@ export class LoginPage implements OnInit {
             error?.error?.msj ||
             error?.message ||
             'Ocurrió un error inesperado.';
-          const header = 'Error ❌';
-          this.generalService.showErrorAlert(msj, header);
+          const color = 'rgb(255, 5, 5)';
+          await this.generalService.mostrarAlerta(msj, color);
+
           await this.generalService.dismissLoading();
         },
       });

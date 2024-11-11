@@ -86,20 +86,24 @@ export class RegisterPage implements OnInit {
       next: async (response) => {
         await this.generalService.dismissLoading();
         const msj = response?.msj || 'Login exitoso';
-        const header = 'Success ✅';
-        this.generalService.showErrorAlert(msj, header);
+        // const header = 'Success ✅';
+        // this.generalService.showErrorAlert(msj, header);
+        const color = 'rgb(8, 238, 12)';
+        await this.generalService.mostrarAlerta(msj, color);
 
         setTimeout(() => {
           window.location.href = '/navbar/home';
           // this.router.navigate(['/navbar/home']);
-        }, 2000);
+        }, 3000);
       },
       error: async (error) => {
         await this.generalService.dismissLoading();
         const msj =
           error?.error?.msj || error?.message || 'Ocurrió un error inesperado.';
-        const header = 'Error ❌';
-        this.generalService.showErrorAlert(msj, header);
+        // const header = 'Error ❌';
+        // this.generalService.showErrorAlert(msj, header);
+        const color = 'rgb(255, 5, 5)';
+        await this.generalService.mostrarAlerta(msj, color);
       },
     });
   }

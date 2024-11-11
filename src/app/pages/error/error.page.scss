@@ -1,0 +1,12 @@
+.text_all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: rgb(220, 220, 220);
+    border-radius: 10px;
+    color: rgb(121, 121, 121);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

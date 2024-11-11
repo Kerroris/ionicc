@@ -1,32 +1,63 @@
+<!-- MENÚ LATERAL MOVIL 📱 Y WEB  💻  -->
+<ion-menu side="end" menuId="main-menu" contentId="content" class="custom-menu">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title class="menu-title">Más obciones</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeMenu()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="content_menu">
+    <ion-list class="list_menu">
+      <ion-item style="cursor: pointer;" class="menu-item" (click)="onLogout()">
+        <ion-label>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+          logout
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header>
   <ion-toolbar class="barra_web" color="none">
     <!-- --- -->
     <img src="assets/icon/logoA.png" alt="Logo" class="logo_img_nav" loading="lazy">
     <ion-buttons class="menu-button" slot="end">
-      <!-- <ion-button class="btn_decorate"  [routerLink]="'./login'">
-        Agregar
-        <img src="assets/img/agregar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
-      </ion-button>
-      <ion-button class="btn_decorate" disabled >
-        Eliminar
-        <img src="assets/img/borrar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
-      </ion-button> -->
       <ion-button class="btn_decorate" routerLink="/register" *ngIf="!isLoggedIn">
         Crear una cuenta
         <img src="assets/img/registrarse.png" alt="Logo" class="img_nav ms-2" loading="lazy">
       </ion-button>
-      <ion-button class="btn_decorate" *ngIf="isLoggedIn" (click)="onLogout()" >
-        logout
-        <ion-icon name="arrow-forward-outline"></ion-icon>
-      </ion-button>
+
+      <span *ngIf="isLoggedIn">
+        <ion-button class="btn_decorate" [routerLink]="'./home'">
+          Contactos
+          <img src="assets/img/chat.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-button>
+        <ion-button class="btn_decorate" [routerLink]="'./add-contacto'">
+          Agregar
+          <img src="assets/img/agregar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-button>
+
+        <!-- <ion-button class="btn_decorate" (click)="onLogout()">
+          logout
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-button> -->
+        <!-- Botón de configuración que abrirá el menú lateral -->
+
+        <ion-button class="btn_decorate" (click)="openMenu()">
+          <img src="assets/img/engranaje.png" alt="Logo" class="img_nav " loading="lazy">
+        </ion-button>
+      </span>
+      
     </ion-buttons>
     <!-- --- -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="alert">
-    ¡Esto es una alerta flotante!
-  </div>
+<ion-content id="content">
   <ion-router-outlet></ion-router-outlet>
 </ion-content>

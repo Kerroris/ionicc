@@ -7,13 +7,16 @@
     --primary-all-v2: #3079f8e4;
 }
 
+.container_css{
+    margin: 1rem;
+}
+
 .btn_decorate {
     border-radius: 25px;
     padding: 1px;
-    font-weight: 12px;
-
+    font-weight: 10px;
     &:hover {
-        background-color: #07af346f;
+        background-color: #1ae14f37;
         border-radius: 0px;
         border-bottom: 1px solid #000000;
     }
@@ -38,13 +41,72 @@ ion-header {
     --background: rgba(255, 255, 255, 0.963);
 }
 
-.btn_ahow_pass{
+.btn_ahow_pass {
     color: black;
     margin-top: 2rem;
     cursor: pointer;
     padding: 10px;
     border-radius: 10px;
-  }
-  .btn_ahow_pass:hover{
+}
+
+.btn_ahow_pass:hover {
     background-color: rgba(0, 0, 0, 0.05);
-  }
+}
+
+
+
+.alert {
+    position: absolute;
+    top: 50px;
+    right: -300px;
+    width: 250px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.904);
+    color: white;
+    border-bottom: 5px solid rgb(17, 184, 17);
+    font-size: 16px;
+    border-radius: 0px;
+    font-weight: bold;
+    transition: right 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+.alert.show {
+    right: 20px;
+}
+
+/* Clase para el contenedor de loading */
+.loadin_all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+}
+
+/* Spinner circular */
+.loadin_all::after {
+    content: '';
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Animación de rotación */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

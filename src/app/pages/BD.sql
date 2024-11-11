@@ -7,7 +7,7 @@ CREATE TABLE con_users (
     email varchar(50) NOT NULL,
     pass varchar(200) NOT NULL,
     img varchar(100) NULL,
-    telefon INT(15) NOT NULL
+    telefon varchar(10) NOT NULL
 );
 
 CREATE TABLE con_contactos(
@@ -15,7 +15,7 @@ CREATE TABLE con_contactos(
     id_user INT NOT NULL,
     nombre varchar(50) NOT NULL,
     apellido varchar(50) NULL,
-    telefon INT(15) NOT NULL,
+    telefon varchar(15) NOT NULL,
     email varchar(50) NULL,
     img varchar(100) NULL,
     direccion varchar(100) NULL,

@@ -1,13 +1,139 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>addContacto</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="container_form">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">addContacto</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <form class="form_new" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+      <ion-row *ngIf="!isLargeScreen">
+        <ion-col size="12">
+          <ion-buttons>
+            <button class="btn_cancelar" type="button" routerLink="/navbar/home">
+              Cancelar
+              <img src="assets/img/borrar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+            </button>
+            <button class="btn_agregar" type="submit" [disabled]="contactForm.invalid">
+              Guardar
+              <img src="assets/img/clic.png" class="ms-2 img_arrow_right" loading="lazy">
+            </button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <span class="text-danger"><strong>*</strong></span>
+              <ion-input formControlName="nombre" label="Nombre" labelPlacement="floating" placeholder=""></ion-input>
+              <ion-note *ngIf="contactForm.controls['nombre'].invalid && contactForm.controls['nombre'].touched"
+                color="danger" style="font-size:7px;">
+                *Obligatorio
+              </ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <ion-input formControlName="apellido" label="Apellido" labelPlacement="floating"
+                placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <ion-label position="floating">Teléfono <span class="text-danger"><strong>*</strong></span>
+                <ion-note *ngIf="contactForm.controls['telefon'].invalid && contactForm.controls['telefon'].touched"
+                  color="danger" style="font-size:7px;">
+                  Obligatorio
+                </ion-note>
+              </ion-label>
+
+              <ion-grid class="phone-input-grid">
+                <ion-row>
+                  <ion-col size="3" class="country-selector">
+                    
+                    <ion-select [(ngModel)]="selectedCountry" [ngModelOptions]="{standalone: true}" (ionChange)="onCountryChange($event)" interface="popover">
+                      <ion-select-option *ngFor="let country of countries" [value]="country">
+                        <div class="country-option">
+                          <img [src]="country.flag" class="country-flag">
+                          <span class="country-name">{{ country.name }}</span>
+                        </div>
+                      </ion-select-option>
+                    </ion-select>
+                    
+                  </ion-col>
+
+                  <!-- Campo de entrada del número de teléfono -->
+                  <ion-col size="8">
+                    <ion-input formControlName="telefon" type="number"
+                      [placeholder]="selectedPhoneCode ? 'Número de teléfono' : 'Selecciona un país'"  >
+                      <span slot="start" *ngIf="selectedPhoneCode">{{ selectedPhoneCode }}</span>
+                    </ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <ion-input formControlName="email" label="Email" labelPlacement="floating" type="email"
+                placeholder=""></ion-input>
+              <ion-note *ngIf="contactForm.controls['email'].invalid && contactForm.controls['email'].touched"
+                color="danger" style="font-size:7px;">
+                *Correo no válido
+              </ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <ion-label>Imagen</ion-label>
+              <button type="button" class="btn_selec_image" (click)="selectImage()">Seleccionar Imagen</button>
+              <ion-note *ngIf="contactForm.controls['img'].invalid && contactForm.controls['img'].touched"
+                color="danger" style="font-size:7px;">
+                *Obligatorio
+              </ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-lg="6" *ngIf="selectedImage">
+            <ion-item>
+              <img [src]="selectedImage" alt="Imagen seleccionada" width="30%">
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <ion-input formControlName="direccion" label="Dirección" labelPlacement="floating"
+                placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-lg="6">
+            <ion-item class="mt-3">
+              <ion-textarea formControlName="nota" label="Nota" labelPlacement="floating" placeholder=""></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-buttons *ngIf="isLargeScreen">
+          <button class="btn_cancelar" type="button" routerLink="/navbar/home">
+            Cancelar
+            <img src="assets/img/borrar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+          </button>
+          <button class="btn_agregar" type="submit" [disabled]="contactForm.invalid">
+            Guardar
+            <img src="assets/img/clic.png" class="ms-2 img_arrow_right" loading="lazy">
+          </button>
+        </ion-buttons>
+
+      </ion-grid>
+    </form>
+
+
+  </div>
 </ion-content>

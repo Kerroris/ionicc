@@ -1,0 +1,91 @@
+.container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding: 20px;
+}
+
+.container_img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; 
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; 
+}
+
+.container_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+}
+
+.formulario {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between; /* Espacio entre los campos */
+}
+
+.btn_cancelar {
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.449);
+    color: rgb(0, 0, 0);
+    border-radius: 0px;
+    border-bottom: 1px solid rgb(0, 102, 255);
+    width: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &:hover {
+        background-color: rgba(0, 110, 255, 0.227);
+    }
+}
+
+.btn_cancelar:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.btn_agregar {
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.449);
+    color: rgb(0, 0, 0);
+    border-radius: 0px;
+    border-bottom: 1px solid rgb(42, 177, 8);
+    width: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &:hover {
+        background-color: rgba(42, 177, 8, 0.227);
+    }
+}
+
+.btn_agregar:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.img_arrow_right {
+    width: 18px;
+    height: auto;
+}
+
+.img_nav {
+    width: 20px;
+    height: auto;
+}
+
+.container_card{
+    padding: 10px;
+}

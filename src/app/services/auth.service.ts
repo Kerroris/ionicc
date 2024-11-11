@@ -37,19 +37,20 @@ export class AuthService {
       );
   }
 
-  // isLoggedIn(): boolean {
-  //   return this.hasToken();
-  // }
-
-  guardaStorage(response: any){
+  guardaStorage(response: any) {
     localStorage.setItem('token', response.token);
     localStorage.setItem('user', JSON.stringify(response.user));
+  }
+
+  getUserFromStorage(): any {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 
   // ☢️ Método varificar si estoy autenticado
   verifisLogged(): boolean {
     const isAuthenticated = this.hasToken();
-    this.isLoggedInSubject.next(isAuthenticated); 
+    this.isLoggedInSubject.next(isAuthenticated);
     return isAuthenticated;
   }
 
@@ -60,11 +61,11 @@ export class AuthService {
   }
 
   register(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/p-register`, data)
-    .pipe(
+    return this.http.post(`${environment.apiUrl}/p-register`, data).pipe(
       tap((response) => {
         this.guardaStorage(response);
       })
     );
   }
+
 }
