@@ -7,6 +7,10 @@ import { ContactosService } from '../../services/contactos.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Capacitor } from '@capacitor/core';
+import { Geolocation } from '@capacitor/geolocation';
+
+// const { Geolocation } = Plugins;
 
 @Component({
   selector: 'app-add-contacto',
@@ -43,22 +47,89 @@ export class AddContactoPage implements OnInit {
       nota: [''],
       userId: [''],
       contri: [''],
+      latitude: [''], // Campo para latitud
+      longitude: [''], // Campo para longitud
     });
     this.isLargeScreen = this.platform.width() >= 765;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.fetchCountries(); //manda llamar api de paises
     this.user = this.authService.getUserFromStorage();
     this.userId = this.user.id;
+
+    try {
+      const { latitude, longitude } = await this.getLocation();
+      console.log('Ubicación obtenida:', latitude, longitude);
+      const msj = 'Lat = ' + latitude + ' Long = ' + longitude ;
+      const color = 'rgb(8, 238, 12)';
+      await this.generalService.mostrarAlerta(msj, color);
+    } catch (error) {
+      await this.generalService.mostrarAlerta('No se pudo obtener la ubicación. Verifica los permisos.', 'rgb(255, 5, 5)');
+    }
+    
+  }
+  
+  async getLocation(): Promise<{ latitude: number; longitude: number }> {
+    if (Capacitor.isNativePlatform()) {
+      try {
+        // Solicitar permisos en plataformas nativas
+        const permissionStatus = await Geolocation.requestPermissions();
+        if (permissionStatus.location === 'granted') {
+          // Obtener ubicación
+          const position = await Geolocation.getCurrentPosition({
+            enableHighAccuracy: true, // Precisión alta
+          });
+          return {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+        } else {
+          console.error('Permisos de geolocalización denegados.');
+          return { latitude: 0, longitude: 0 }; // Valores predeterminados
+        }
+      } catch (error) {
+        console.error('Error obteniendo la ubicación:', error);
+        return { latitude: 0, longitude: 0 }; // Valores predeterminados
+      }
+    } else {
+      // Usar la API de Geolocalización de HTML5 para la web
+      return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              resolve({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+            },
+            (error) => {
+              console.error('Error obteniendo la ubicación:', error);
+              resolve({ latitude: 0, longitude: 0 }); // Valores predeterminados
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+          );
+        } else {
+          console.error('Geolocalización no soportada por el navegador.');
+          resolve({ latitude: 0, longitude: 0 }); // Valores predeterminados
+        }
+      });
+    }
   }
 
+
+  // ☢️ Enviara el form
   async onSubmit() {
     if (this.contactForm.valid) {
+      // Obtén la ubicación del dispositivo
+      const { latitude, longitude } = await this.getLocation();
+
       // agrega el id del usuario
       this.contactForm.patchValue({
-        userId: this.userId,
-        contri: this.selectedPhoneCode
+        userId: this.userId, //id user
+        contri: this.selectedPhoneCode, // códígo pais
+        latitude,
+        longitude,
       });
 
       //mostrar loadingg
@@ -90,6 +161,7 @@ export class AddContactoPage implements OnInit {
       await this.generalService.mostrarAlerta(msj, color);
     }
   }
+
 
   //☢️ Función para seleccionar imagen
   async selectImage() {
@@ -140,10 +212,12 @@ export class AddContactoPage implements OnInit {
     this.contactForm.patchValue({ img: this.selectedImage });
   }
 
+  //☢️ Checa el tamaño de la pantalla
   checkScreenSize() {
     this.isLargeScreen = this.platform.width() >= 765;
   }
 
+  //☢️ Api de Contries
   async fetchCountries() {
     this.http
       .get<any[]>('https://restcountries.com/v3.1/all')

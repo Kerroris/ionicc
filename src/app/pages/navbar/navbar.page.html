@@ -33,26 +33,24 @@
       </ion-button>
 
       <span *ngIf="isLoggedIn">
-        <ion-button class="btn_decorate" [routerLink]="'./home'">
+        <button class="btn_decorate" [routerLink]="'./home'">
           Contactos
           <img src="assets/img/chat.png" alt="Logo" class="img_nav ms-2" loading="lazy">
-        </ion-button>
-        <ion-button class="btn_decorate" [routerLink]="'./add-contacto'">
+        </button>
+        <button class="btn_decorate" [routerLink]="'./add-contacto'">
           Agregar
           <img src="assets/img/agregar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
-        </ion-button>
+        </button>
+        <!-- <button class="btn_decorate" [routerLink]="'./home'">
+          Ubicación
+          <img src="assets/img/mapa.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </button> -->
 
-        <!-- <ion-button class="btn_decorate" (click)="onLogout()">
-          logout
-          <ion-icon name="arrow-forward-outline"></ion-icon>
-        </ion-button> -->
-        <!-- Botón de configuración que abrirá el menú lateral -->
-
-        <ion-button class="btn_decorate" (click)="openMenu()">
+        <button class="btn_decorate" (click)="openMenu()">
           <img src="assets/img/engranaje.png" alt="Logo" class="img_nav " loading="lazy">
-        </ion-button>
+        </button>
       </span>
-      
+
     </ion-buttons>
     <!-- --- -->
   </ion-toolbar>

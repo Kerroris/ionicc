@@ -52,6 +52,14 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/error/error.module').then( m => m.ErrorPageModule)
   },
+  {
+    path: 'streaming',
+    loadChildren: () => import('./pages/streaming/streaming.module').then( m => m.StreamingPageModule)
+  },
+  {
+    path: 'maps',
+    loadChildren: () => import('./pages/maps/maps.module').then( m => m.MapsPageModule)
+  },
 ];
 
 @NgModule({

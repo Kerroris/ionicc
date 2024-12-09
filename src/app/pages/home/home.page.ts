@@ -83,14 +83,13 @@ export class HomePage implements OnInit {
       next: async (response) => {
         await this.generalService.dismissLoading();
         // console.log(this.contacts);
-        // Asignar los contactos de la respuesta a la variable contacts
         this.contacts = response.contactos.map((contacto: any) => ({
           name: contacto.nombre || '',
           email: contacto.email || '',
           phone: contacto.telefon || '',
           id: contacto.id || '',
           avatar: contacto.img,
-          selected: false, // Propiedad adicional
+          selected: false, 
         }));
       },
       error: async (error) => {
