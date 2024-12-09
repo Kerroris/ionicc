@@ -63,7 +63,7 @@ export class AddContactoPage implements OnInit {
       console.log('Ubicación obtenida:', latitude, longitude);
       const msj = 'Lat = ' + latitude + ' Long = ' + longitude ;
       const color = 'rgb(8, 238, 12)';
-      await this.generalService.mostrarAlerta(msj, color);
+      // await this.generalService.mostrarAlerta(msj, color);
     } catch (error) {
       await this.generalService.mostrarAlerta('No se pudo obtener la ubicación. Verifica los permisos.', 'rgb(255, 5, 5)');
     }

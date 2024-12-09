@@ -1,13 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from '../../services/General.service';
-import { AuthService } from '../../services/auth.service';
 import { ContactosService } from '../../services/contactos.service';
 import { Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
+import { Share } from '@capacitor/share';
 
 import * as mapboxgl from 'mapbox-gl';
 
@@ -72,39 +70,69 @@ export class CantactDetallePage implements OnInit {
   }
 
   loadMap() {
-    if (this.map) {
-      this.map.remove(); // Elimina el mapa anterior
-    }
-
-    // Asegúrate de que las coordenadas sean números
     const lat = Number(this.user.lat);
     const lon = Number(this.user.lon);
 
-    // Crear el mapa nuevamente sin permitir el zoom
+    if (isNaN(lat) || isNaN(lon)) {
+      console.error('Invalid coordinates:', lat, lon);
+      return;
+    }
+
+    console.log('Initial coordinates:', lat, lon);
+
     this.map = new mapboxgl.Map({
       container: 'mapID',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lon, lat], // Coordenadas iniciales del marcador
+      center: [lon, lat],
       zoom: 13,
-      interactive: true, // Habilita las interacciones del mapa (movimiento)
-      attributionControl: false, // Desactiva los controles de atribución si es necesario
+      interactive: true,
+      attributionControl: false,
     });
 
-    // Deshabilitar el zoom
+    this.map.on('load', () => {
+      const mapCenter = this.map.getCenter();
+      console.log('Map center:', mapCenter);
+
+      // Verificación de coordenadas antes de colocar el marcador
+      console.log('Coordinates for marker placement:', { lng: lon, lat: lat });
+
+      new mapboxgl.Marker({ draggable: false })
+        .setLngLat([lon, lat])
+        .addTo(this.map);
+
+      console.log('Marker coordinates:', [lon, lat]);
+    });
+
+    // Deshabilitando interacciones de zoom
     this.map.scrollZoom.disable();
     this.map.doubleClickZoom.disable();
     this.map.boxZoom.disable();
     this.map.touchZoomRotate.disable();
+  }
 
-    // Agregar el marcador en la posición correcta
-    const marker = new mapboxgl.Marker({ draggable: false })
-      .setLngLat([lon, lat])
-      .addTo(this.map);
+  async shareContact() {
+    const name = `${this.user.nombre} ${this.user.apellido}`;
+    const phone = this.formatPhoneNumber(this.user.telefon || '');
+    const email = this.user.email || 'No proporcionado';
+    const address = this.user.direccion || 'No proporcionada';
 
-    // Usar el evento render para mantener el marcador en su lugar
-    this.map.on('render', () => {
-      marker.setLngLat([lon, lat]); // Reestablece la posición del marcador en cada render
-    });
+    // Crear el mensaje con los datos del contacto
+    const message =
+      `Información del contacto:\n` +
+      `Nombre: ${name}\n` +
+      `Teléfono: ${phone}\n` +
+      `Correo electrónico: ${email}\n` +
+      `Dirección: ${address}`;
+
+    try {
+      await Share.share({
+        title: `Compartir contacto: ${name}`,
+        text: message,
+        dialogTitle: 'Compartir contacto',
+      });
+    } catch (error) {
+      console.error('Error al compartir el contacto:', error);
+    }
   }
 
   formatPhoneNumber(phone: string): string {

@@ -6,10 +6,14 @@
         <button class="btn_cancelar" type="button" routerLink="/navbar/home">
           <img src="assets/img/flechaIzquierda.png" alt="Logo" class="img_nav" loading="lazy">
         </button>
-        <button class="btn_agregar" type="submit">
+        <button class="btn_share" (click)="shareContact()">
+          Compartir
+          <img src="assets/img/compartir.png" class="ms-2" width="20px" height="auto" loading="lazy">
+        </button>
+        <!-- <button class="btn_agregar" type="submit">
           Editar
           <img src="assets/img/clic.png" class="ms-2 img_arrow_right" loading="lazy">
-        </button>
+        </button> -->
       </ion-buttons>
 
       <div class="container_img">
@@ -25,7 +29,7 @@
       </ion-card>
     </ion-col>
 
-    <ion-col size="12" size-md="6" >
+    <ion-col size="12" size-md="6">
       <div class="contenedor_mapa">
         <div id="mapID"></div>
       </div>

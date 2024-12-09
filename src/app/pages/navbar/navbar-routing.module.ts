@@ -39,6 +39,17 @@ const routes: Routes = [
         loadChildren: () =>
           import('../add-contacto/add-contacto.module').then((m) => m.AddContactoPageModule),
       },
+      {
+        path: 'streaming',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('../streaming/streaming.module').then((m) => m.StreamingPageModule),
+      },
+      {
+        path: 'grabacion',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../grabacion/grabacion.module').then( m => m.GrabacionPageModule)
+      },
     ],
   },
 ];

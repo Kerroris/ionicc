@@ -1,13 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>streaming</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="video-grid">
+    <ion-card *ngFor="let video of videos">
+      <img [src]="video.snippet.thumbnails.medium.url" alt="video thumbnail">
+      <ion-card-header>
+        <!-- <ion-card-title>{{ video.snippet.title }}</ion-card-title> -->
+      </ion-card-header>
+      <ion-card-content>
+        {{ video.snippet.description }}
+      </ion-card-content>
+      <ion-button expand="block" (click)="playVideo(video.id.videoId)">Ver</ion-button>
+    </ion-card>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">streaming</ion-title>
-    </ion-toolbar>
-  </ion-header>
 </ion-content>

@@ -12,10 +12,23 @@
   </ion-header>
   <ion-content class="content_menu">
     <ion-list class="list_menu">
+      <ion-item style="cursor: pointer;" class="menu-item" [routerLink]="'./streaming'" (click)="closeMenu()">
+        <ion-label>
+          Streaming
+          <img src="assets/img/streaming.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-label>
+      </ion-item>
+      <ion-item style="cursor: pointer;" class="menu-item" [routerLink]="'./grabacion'" (click)="closeMenu()">
+        <ion-label>
+          Grabación
+          <img src="assets/img/grabacion.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        </ion-label>
+      </ion-item>
+      <!-- -----  -->
       <ion-item style="cursor: pointer;" class="menu-item" (click)="onLogout()">
         <ion-label>
-          <ion-icon name="arrow-forward-outline"></ion-icon>
           logout
+          <img src="assets/img/salida.png" alt="Logo" class="img_nav ms-2" loading="lazy">
         </ion-label>
       </ion-item>
     </ion-list>
@@ -41,11 +54,10 @@
           Agregar
           <img src="assets/img/agregar.png" alt="Logo" class="img_nav ms-2" loading="lazy">
         </button>
-        <!-- <button class="btn_decorate" [routerLink]="'./home'">
-          Ubicación
-          <img src="assets/img/mapa.png" alt="Logo" class="img_nav ms-2" loading="lazy">
+        <!-- <button class="btn_decorate" [routerLink]="'./streaming'">
+          Streaming
+          <img src="assets/img/streaming.png" alt="Logo" class="img_nav ms-2" loading="lazy">
         </button> -->
-
         <button class="btn_decorate" (click)="openMenu()">
           <img src="assets/img/engranaje.png" alt="Logo" class="img_nav " loading="lazy">
         </button>

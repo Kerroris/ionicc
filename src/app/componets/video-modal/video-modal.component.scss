@@ -1,0 +1,10 @@
+.btn_close{
+    background-color: rgba(57, 232, 86, 0.112);
+    color: black;
+    margin: 5px;
+    border-radius: 10px;
+    padding: 10px;
+    &:hover{
+        background-color: rgba(57, 232, 86, 0.362);
+    }
+}

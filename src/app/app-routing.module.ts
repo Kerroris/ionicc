@@ -54,11 +54,18 @@ const routes: Routes = [
   },
   {
     path: 'streaming',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/streaming/streaming.module').then( m => m.StreamingPageModule)
   },
   {
     path: 'maps',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/maps/maps.module').then( m => m.MapsPageModule)
+  },
+  {
+    path: 'grabacion',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/grabacion/grabacion.module').then( m => m.GrabacionPageModule)
   },
 ];
 
