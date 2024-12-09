@@ -1,71 +1,70 @@
-import { Component, OnInit } from '@angular/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Component } from '@angular/core';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
-import { Platform } from '@ionic/angular';
-import { PermissionsService } from '../../services/Permissions.service'; // Asumimos que tienes un servicio para manejar permisos
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-grabacion',
   templateUrl: './grabacion.page.html',
   styleUrls: ['./grabacion.page.scss'],
 })
-export class GrabacionPage implements OnInit {
-  videoUrl: string | null = null; // Para almacenar la URL del video
-  isRecording: boolean = false;
+export class GrabacionPage {
+  videoUrl: SafeResourceUrl | undefined;
 
-  constructor(private platform: Platform, private permissionsService: PermissionsService) {}
-
-  ngOnInit() {
-    if (!this.platform.is('mobile')) {
-      // En Web, muestra un mensaje indicando que no se puede grabar video
-      this.videoUrl = 'http://example.com/sample-video.mp4'; // Video de ejemplo para web
-    }
+  constructor(private sanitizer: DomSanitizer) {
+    this.videoUrl = undefined;
   }
 
-  // Función para grabar el video
-  async grabarVideo() {
-    try {
-      // Verificar si estamos en una plataforma móvil
-      if (!this.platform.is('mobile')) {
-        console.error('La grabación de video no está soportada en Web');
-        return;
-      }
+  async recordVideo() {
+    const videoInput = document.createElement('input');
+    videoInput.type = 'file';
+    videoInput.accept = 'video/*';
+    videoInput.capture = 'camera';
+    videoInput.onchange = async (event: any) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64Data = reader.result as string;
+        const fileName = `video_${new Date().getTime()}.mp4`;
 
-      // Verificar permisos para acceder a la cámara
-      const hasPermission = await this.permissionsService.requestCameraPermission();
-      if (!hasPermission) {
-        console.error('Permiso de cámara denegado');
-        return;
-      }
-
-      // Configuración para capturar video
-      const capturedVideo = await Camera.getPhoto({
-        quality: 100,
-        source: CameraSource.Camera,
-        resultType: CameraResultType.Uri,
-        // Esto no es posible en web, se requiere un plugin adicional para video.
-      });
-
-      if (capturedVideo && capturedVideo.webPath) {
-        this.videoUrl = capturedVideo.webPath; // Guardar la URL del video grabado
-      }
-    } catch (error) {
-      console.error('Error al grabar video', error);
-    }
-  }
-
-  // Función para compartir el video
-  async compartirVideo() {
-    if (this.videoUrl) {
-      try {
-        await Share.share({
-          title: 'Comparte este video',
-          text: 'Mira este video',
-          url: this.videoUrl,
+        // Guardamos el archivo en el directorio de documentos
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64Data.split(',')[1], // Elimina la cabecera base64
+          directory: Directory.Documents,
         });
-      } catch (error) {
-        console.error('Error al compartir el video', error);
-      }
+
+        // Leemos el archivo guardado para obtener el base64
+        const readFile = await Filesystem.readFile({
+          path: fileName,
+          directory: Directory.Documents,
+        });
+
+        // Para la plataforma nativa
+        const videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:video/mp4;base64,' + readFile.data);
+
+        // Asignamos la URI sanitizada para el video
+        this.videoUrl = videoUrl;
+      };
+      reader.readAsDataURL(file);
+    };
+    videoInput.click();
+  }
+
+  async shareVideo() {
+    const videoUrlString = this.videoUrl?.toString();
+
+    if (videoUrlString) {
+      await Share.share({
+        title: 'Mira este video',
+        text: 'Este es el video que grabé',
+        url: videoUrlString,
+        dialogTitle: 'Compartir video',
+      }).catch((error) => {
+        console.error('Error al compartir el video:', error);
+      });
+    } else {
+      console.log('No se encontró un video para compartir.');
     }
   }
 }

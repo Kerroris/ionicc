@@ -1,14 +1,13 @@
 <ion-content>
   <div class="ion-padding">
-    <h1>Graba y comparte tu video</h1>
-
-    <!-- Botón para grabar video -->
-    <ion-button expand="full" (click)="grabarVideo()">Grabar Video</ion-button>
-
-    <!-- Mostrar el video grabado -->
-    <video *ngIf="videoUrl" [src]="videoUrl" controls="true" style="max-width: 100%;"></video>
-
-    <!-- Botón para compartir el video -->
-    <ion-button *ngIf="videoUrl" expand="full" (click)="compartirVideo()">Compartir Video</ion-button>
+    <h1>Grabar video</h1>
+    <button class="btn_grabar" (click)="recordVideo()">
+      Grabar Video
+      <img src="assets/img/grabar.png" alt="Logo" class="ms-2" width="20px" height="auto" loading="lazy">
+    </button>
+    <div class="video-container">
+      <video *ngIf="videoUrl" [src]="videoUrl" controls></video>
+    </div>
+    <!-- <ion-button *ngIf="videoUrl" (click)="shareVideo()">Compartir Video</ion-button> -->
   </div>
 </ion-content>

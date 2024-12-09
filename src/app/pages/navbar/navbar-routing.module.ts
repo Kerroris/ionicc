@@ -50,6 +50,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('../grabacion/grabacion.module').then( m => m.GrabacionPageModule)
       },
+      {
+        path: 'sensores',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../sensores/sensores.module').then( m => m.SensoresPageModule)
+      },
     ],
   },
 ];

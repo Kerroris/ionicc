@@ -67,6 +67,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/grabacion/grabacion.module').then( m => m.GrabacionPageModule)
   },
+  {
+    path: 'sensores',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/sensores/sensores.module').then( m => m.SensoresPageModule)
+  },
 ];
 
 @NgModule({

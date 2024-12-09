@@ -6,8 +6,7 @@ import { Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment.prod';
 import { Share } from '@capacitor/share';
-
-import * as mapboxgl from 'mapbox-gl';
+import { Geolocation } from '@capacitor/geolocation'; // Importación corregida
 
 @Component({
   selector: 'app-cantact-detalle',
@@ -25,7 +24,7 @@ export class CantactDetallePage implements OnInit {
   public isLargeScreen: boolean;
   public showForm: boolean = false;
   public contactId: number | null = null;
-  map: any;
+  mapContainer: HTMLElement | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -43,12 +42,10 @@ export class CantactDetallePage implements OnInit {
     // Obtén el ID de la URL
     this.contactId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.getContacto(this.contactId);
-    (mapboxgl as any).accessToken =
-      'pk.eyJ1IjoiY2VydmF5YSIsImEiOiJjbTRnNnV0bzgxaGswMmpvbWszdXczYXU3In0.UTY3YidMQdlWEvP2Yg7Lkg';
   }
 
   async getContacto(userId: any) {
-    //mostrar loadingg
+    // Mostrar loading
     await this.generalService.presentLoading();
 
     this.contactosService.getContacto(userId).subscribe({
@@ -69,47 +66,39 @@ export class CantactDetallePage implements OnInit {
     });
   }
 
-  loadMap() {
+  async loadMap() {
     const lat = Number(this.user.lat);
     const lon = Number(this.user.lon);
-
+  
     if (isNaN(lat) || isNaN(lon)) {
       console.error('Invalid coordinates:', lat, lon);
       return;
     }
-
-    console.log('Initial coordinates:', lat, lon);
-
-    this.map = new mapboxgl.Map({
-      container: 'mapID',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lon, lat],
-      zoom: 13,
-      interactive: true,
-      attributionControl: false,
-    });
-
-    this.map.on('load', () => {
-      const mapCenter = this.map.getCenter();
-      console.log('Map center:', mapCenter);
-
-      // Verificación de coordenadas antes de colocar el marcador
-      console.log('Coordinates for marker placement:', { lng: lon, lat: lat });
-
-      new mapboxgl.Marker({ draggable: false })
-        .setLngLat([lon, lat])
-        .addTo(this.map);
-
-      console.log('Marker coordinates:', [lon, lat]);
-    });
-
-    // Deshabilitando interacciones de zoom
-    this.map.scrollZoom.disable();
-    this.map.doubleClickZoom.disable();
-    this.map.boxZoom.disable();
-    this.map.touchZoomRotate.disable();
+  
+    // Obtener contenedor del mapa
+    this.mapContainer = document.getElementById('mapID');
+    if (!this.mapContainer) {
+      console.error('Map container not found.');
+      return;
+    }
+  
+    // Limpia el contenedor si ya tiene contenido previo
+    this.mapContainer.innerHTML = '';
+  
+    // Crear y mostrar un mapa básico con un marcador estático
+    const mapHtml = `
+      <iframe
+        width="100%"
+        height="400px"
+        frameborder="0"
+        src="https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed&markers=${lat},${lon}"
+        allowfullscreen>
+      </iframe>`;
+    this.mapContainer.innerHTML = mapHtml;
+  
+    console.log(`Mapa cargado con marcador en las coordenadas: [${lat}, ${lon}]`);
   }
-
+  
   async shareContact() {
     const name = `${this.user.nombre} ${this.user.apellido}`;
     const phone = this.formatPhoneNumber(this.user.telefon || '');
@@ -137,7 +126,7 @@ export class CantactDetallePage implements OnInit {
 
   formatPhoneNumber(phone: string): string {
     if (!phone || phone.length < 10) return phone;
-    // Separa los ultimos 10 dígitos para el número principal
+    // Separa los últimos 10 dígitos para el número principal
     const mainNumber = phone.slice(-10);
     const areaCode = phone.slice(0, phone.length - 10);
     // Formateo del número principal
