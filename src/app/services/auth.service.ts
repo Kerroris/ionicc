@@ -29,7 +29,7 @@ export class AuthService {
     const body = { email, password };
 
     return this.http
-      .post<LoginResponse>(`${environment.apiUrl}/p-login`, body)
+      .post<LoginResponse>(`${environment.apiUrl}/login.php`, body)
       .pipe(
         tap((response) => {
           this.guardaStorage(response);
@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   register(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/p-register`, data).pipe(
+    return this.http.post(`${environment.apiUrl}/register.php`, data).pipe(
       tap((response) => {
         this.guardaStorage(response);
       })

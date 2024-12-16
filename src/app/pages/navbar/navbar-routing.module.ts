@@ -28,33 +28,12 @@ const routes: Routes = [
           import('../home/home.module').then((m) => m.HomePageModule),
       },
       {
-        path: 'cantact-detalle/:id',
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import('../cantact-detalle/cantact-detalle.module').then((m) => m.CantactDetallePageModule),
-      },
-      {
-        path: 'add-contacto',
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import('../add-contacto/add-contacto.module').then((m) => m.AddContactoPageModule),
-      },
-      {
         path: 'streaming',
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('../streaming/streaming.module').then((m) => m.StreamingPageModule),
       },
-      {
-        path: 'grabacion',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('../grabacion/grabacion.module').then( m => m.GrabacionPageModule)
-      },
-      {
-        path: 'sensores',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('../sensores/sensores.module').then( m => m.SensoresPageModule)
-      },
+      
     ],
   },
 ];

@@ -29,14 +29,9 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.formBuilder.group(
       {
         nombre: ['', Validators.required],
-        apellido_p: ['', Validators.required],
-        apellido_m: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        telefon: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Validación de teléfono
-        pass: ['', [Validators.required, this.passwordValidator]],
-        confirm_pass: ['', Validators.required],
+        pass: ['', [Validators.required]],
       },
-      { validators: this.passwordMatchValidator }
     );
   }
 
@@ -44,29 +39,10 @@ export class RegisterPage implements OnInit {
     console.log('hola - registro');
   }
 
-  nextStep() {
-    if (this.currentStep < 2) {
-      this.currentStep++;
-    }
-  }
-
   // Validador personalizado para la contraseña
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(control.value) ? null : { passwordInvalid: true };
-  }
-
-  previousStep() {
-    if (this.currentStep > 1) {
-      this.currentStep--;
-    }
-  }
-
-  // Validación para que las contraseñas coincidan
-  passwordMatchValidator(group: FormGroup) {
-    const pass = group.get('pass')?.value;
-    const confirmPass = group.get('confirm_pass')?.value;
-    return pass === confirmPass ? null : { passwordsMismatch: true };
   }
 
   // Mostrar u ocultar la contraseña
@@ -79,31 +55,22 @@ export class RegisterPage implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    // Muestrar un loading
-    await this.generalService.presentLoading();
 
     this.authService.register(this.registerForm.value).subscribe({
       next: async (response) => {
-        await this.generalService.dismissLoading();
-        const msj = response?.msj || 'Login exitoso';
-        // const header = 'Success ✅';
-        // this.generalService.showErrorAlert(msj, header);
-        const color = 'rgb(8, 238, 12)';
-        await this.generalService.mostrarAlerta(msj, color);
+        const msj = response?.mensaje || 'Login exitoso';
+        const header = 'Success ✅';
+        this.generalService.showErrorAlert(msj, header);
 
         setTimeout(() => {
-          window.location.href = '/navbar/home';
-          // this.router.navigate(['/navbar/home']);
+          window.location.href = '/star/home';
         }, 3000);
       },
       error: async (error) => {
-        await this.generalService.dismissLoading();
         const msj =
           error?.error?.msj || error?.message || 'Ocurrió un error inesperado.';
-        // const header = 'Error ❌';
-        // this.generalService.showErrorAlert(msj, header);
-        const color = 'rgb(255, 5, 5)';
-        await this.generalService.mostrarAlerta(msj, color);
+        const header = 'Error ❌';
+        this.generalService.showErrorAlert(msj, header);
       },
     });
   }

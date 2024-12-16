@@ -43,7 +43,7 @@ export class NavbarPage implements OnInit {
   // Función para salir
   onLogout() {
     this.authService.logout();
-    window.location.href = '/navbar/login';
+    window.location.href = '/star/login';
     // this.router.navigate(['/navbar/login']);
   }
 }

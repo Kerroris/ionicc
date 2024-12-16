@@ -7,11 +7,11 @@ import { NotAuthGuard } from './guards/notauth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'navbar/login',
+    redirectTo: 'star/login',
     pathMatch: 'full',
   },
   {
-    path: 'navbar',
+    path: 'star',
     loadChildren: () =>
       import('./pages/navbar/navbar.module').then((m) => m.NavbarPageModule),
   },
@@ -36,19 +36,6 @@ const routes: Routes = [
       import('./pages/home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: 'cantact-detalle/:id',
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./pages/cantact-detalle/cantact-detalle.module').then(
-        (m) => m.CantactDetallePageModule
-      ),
-  },
-  {
-    path: 'add-contacto',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/add-contacto/add-contacto.module').then( m => m.AddContactoPageModule)
-  },
-  {
     path: '**',
     loadChildren: () => import('./pages/error/error.module').then( m => m.ErrorPageModule)
   },
@@ -56,21 +43,6 @@ const routes: Routes = [
     path: 'streaming',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/streaming/streaming.module').then( m => m.StreamingPageModule)
-  },
-  {
-    path: 'maps',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/maps/maps.module').then( m => m.MapsPageModule)
-  },
-  {
-    path: 'grabacion',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/grabacion/grabacion.module').then( m => m.GrabacionPageModule)
-  },
-  {
-    path: 'sensores',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/sensores/sensores.module').then( m => m.SensoresPageModule)
   },
 ];
 

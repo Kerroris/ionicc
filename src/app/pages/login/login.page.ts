@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
         next: async () => {
           await this.generalService.dismissLoading();
           // this.router.navigate(['/star/home']);
-          window.location.href = '/navbar/home';
+          window.location.href = '/star/home';
         },
         error: async (error) => {
           const msj =
